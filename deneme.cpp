@@ -80,7 +80,9 @@ int main(){
             }
             break;
         
-            default:      
+            default:
+                kelimeler.clear();
+                
             break;
         }
 
