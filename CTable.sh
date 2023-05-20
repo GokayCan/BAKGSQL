@@ -2,8 +2,8 @@
 
 paramlist=("$@")
 
-tablename=${paramlist[0]}
-
+databasename=${paramlist[0]}
+tablename=${paramlist[1]}
 
 # Gelen parametreden sayi kadar değişken oluşturma
 for par in "$sayi";
@@ -13,17 +13,17 @@ done
 
 
 # Değer ataması yapma
-for ((i=1; i<${#paramlist[@]}; i++)); do
+for ((i=2; i<${#paramlist[@]}; i++)); do
   eval "param$i=\"${paramlist[$i]}\""
 done
 
 table=$tablename.txt
-touch $table
+touch $databasename/$table
 
 
-for ((i=1; i<${#paramlist[@]};i++));do
-  echo -n "${paramlist[$i]} " >> "$table"
+for ((i=2; i<${#paramlist[@]};i++));do
+  echo -n "${paramlist[$i]} " >> "$databasename/$table"
 done
 
-sed -i 's/ $//' "$table"
+sed -i 's/ $//' "$databasename/$table"
 

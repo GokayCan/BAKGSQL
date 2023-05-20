@@ -7,7 +7,7 @@ using namespace std;
 
 enum query{
     _create = 1,
-    //_select = 2,
+    _select = 2,
     none = 3,    
 };
 
@@ -17,58 +17,76 @@ int main(){
     query qType = none;
     string cdScript = "./CDatabase.sh";
     string ctScript = "./CTable.sh";
-    bool flag = false;
 
-    cout<<"lütfen sorgunuzu giriniz:(çıkmak için q tuşlayınız)";
+    cout<<"=>";
     getline(cin,sorgu);
 
-    while(sorgu!="q" || !flag){
+    while(sorgu!="q"){
         stringstream ss(sorgu);
-        while(ss >> kelime) kelimeler.push_back(kelime);
-
-        if(kelimeler[0] == "create") qType = _create;
-        //else if (kelimeler[0] == "select") qType = _select;
+        while(ss >> kelime) {
+            kelimeler.push_back(kelime);
+        }
+        if(kelimeler[0] == "create"){
+            qType = _create;
+        }
+            
+        else if (kelimeler[0] == "select") 
+        {
+            qType = _select;
+        }
 
 
         switch (qType)
         {
-        case _create:
-            
-            if(kelimeler[1] == "database"){
-                string command = cdScript + " " + kelimeler[2];
-                int result = system(command.c_str());
-                if(result == -1) cout<<"database oluşturulurken hata meydana geldi"<< endl;
-                else cout<<"database başarıyla oluşturuldu"<< endl;
-                kelimeler.clear();
-            }
-            else if(kelimeler[1] == "table"){
-                string tableName = kelimeler[2],command;
-                vector<string> params;
-                int sayac=0;
-                for(int i=3; i<kelimeler.size();i++){ 
-                    sayac++;
-                    params.push_back(kelimeler[i]);
-                }
-                command = ctScript + " " + tableName + " ";
+            //create islemi yapmak icin
+            case _create:
+                //database olusturmak icin
+                if(kelimeler[1] == "database"){
+                    string command = cdScript + " " + kelimeler[2];
+                    int result = system(command.c_str());
 
-                for(int i = 0;i<params.size();i++){
-                    command += " " + params[i];
+                    if(result == -1) {
+                        cout<<"database oluşturulurken hata meydana geldi"<< endl;
+                    }
+                    else {
+                        cout<<"database başarıyla oluşturuldu"<< endl;
+                    } 
+
+                    kelimeler.clear();
                 }
-                system(command.c_str());
-                params.clear();
-                kelimeler.clear();
+                //tablo olusturmak icin
+                else if(kelimeler[1] == "table"){
+                    string command,tableName = kelimeler[2];
+                    vector<string> params;
+                    int sayac = 0;
+
+                    int pos = tableName.find("/");
+                    string databaseName = tableName.substr(0,pos);
+                    tableName = tableName.substr(pos+1);
+
+                    for(int i = 3; i < kelimeler.size(); i++){ 
+                        sayac++;
+                        params.push_back(kelimeler[i]);
+                    }
+
+                    command = ctScript + " " + databaseName + " " + tableName + " ";
+
+                    for(int i = 0;i<params.size();i++){
+                        command += " " + params[i];
+                    }
+                    system(command.c_str());
+                    params.clear();
+                    kelimeler.clear();
             }
-            flag = true;
             break;
         
-        default:
-            cout<<"zooort";
+            default:      
             break;
         }
 
-        cout<<"lütfen sorgunuzu giriniz:(çıkmak için q tuşlayınız)";
+        cout<<"=>";
         getline(cin,sorgu);
     }
-
-
+    cout << endl << "Program Sonu";
+    return 0;
 } 
