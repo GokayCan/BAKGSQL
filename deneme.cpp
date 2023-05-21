@@ -57,25 +57,41 @@ int main(){
                 //tablo olusturmak icin
                 else if(kelimeler[1] == "table"){
                     string command,tableName = kelimeler[2];
-                    vector<string> params;
+                    //vector<string> params;
                     int sayac = 0;
 
                     int pos = tableName.find("/");
                     string databaseName = tableName.substr(0,pos);
                     tableName = tableName.substr(pos+1);
 
-                    for(int i = 3; i < kelimeler.size(); i++){ 
+                    // parametrelerin başına ve sonuna , koyan kısım. sorgu şu şekilde yazılmalı -> create table alperen/table1 adi,soyadi,yasi,hava durumu, 
+                    string shString= kelimeler[3];//kelimeler kısmı 26. satırda boşluklara göre bölündüğü için sıkıntı çıkarıyor. sorgu, parametrelerden itibaren kesintisiz alınmalı bi şekilde
+                    cout<<shString<<endl;
+                    vector<string> shParams;
+                    int parampos =0;
+                    while(parampos != -1){
+                        parampos = shString.find(",");
+                        string word = shString.substr(0,parampos);
+                        word = "," + word + ",";
+                        shParams.push_back(word);
+                        cout<<"calisti"<<endl;
+                        shString = shString.substr(parampos+1);
+                        parampos = shString.find(",");// bu kısımda parampos -1 mi diye if konulup eğer -1 ise kalan kısım yine word e konulur ve diziye atılır. bu şekilde kullanıcı sorguyu yazarken en sona virgül koymasına gerek kalmaz. bkz 67
+                    }//
+                    //-----------------------------------------------------------//
+
+                    /*for(int i = 3; i < kelimeler.size(); i++){ 
                         sayac++;
                         params.push_back(kelimeler[i]);
-                    }
+                    }*/
 
                     command = ctScript + " " + databaseName + " " + tableName + " ";
 
-                    for(int i = 0;i<params.size();i++){
-                        command += " " + params[i];
+                    for(int i = 0;i<shParams.size();i++){
+                        command += " " + shParams[i];
                     }
                     system(command.c_str());
-                    params.clear();
+                    shParams.clear();
                     kelimeler.clear();
             }
             break;

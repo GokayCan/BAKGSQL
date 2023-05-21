@@ -25,5 +25,6 @@ for ((i=2; i<${#paramlist[@]};i++));do
   echo -n "${paramlist[$i]} " >> "$databasename/$table"
 done
 
+# sonda kalan boşluğu silme
 sed -i 's/ $//' "$databasename/$table"
 
