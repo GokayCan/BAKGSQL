@@ -35,7 +35,6 @@ int main(){
             qType = _select;
         }
 
-
         switch (qType)
         {
             //create islemi yapmak icin
@@ -64,8 +63,14 @@ int main(){
                     string databaseName = tableName.substr(0,pos);
                     tableName = tableName.substr(pos+1);
 
-                    // parametrelerin başına ve sonuna , koyan kısım. sorgu şu şekilde yazılmalı -> create table alperen/table1 adi,soyadi,yasi,hava durumu, 
-                    string shString= kelimeler[3];//kelimeler kısmı 26. satırda boşluklara göre bölündüğü için sıkıntı çıkarıyor. sorgu, parametrelerden itibaren kesintisiz alınmalı bi şekilde
+                    // parametrelerin basina ve sonuna , koyulan kisim. sorgu su sekilde yazilmali -> create table alperen/table1 adi,soyadi,yasi,hava durumu, 
+                    string shString = "";
+                    cout<<kelimeler.size()<<endl;
+                    for(int i = 3; i< kelimeler.size();i++){
+                        cout<<kelimeler[i]<<endl;
+                        shString += kelimeler[i];
+                        shString += " ";
+                    }
                     cout<<shString<<endl;
                     vector<string> shParams;
                     int parampos =0;
@@ -76,14 +81,9 @@ int main(){
                         shParams.push_back(word);
                         cout<<"calisti"<<endl;
                         shString = shString.substr(parampos+1);
-                        parampos = shString.find(",");// bu kısımda parampos -1 mi diye if konulup eğer -1 ise kalan kısım yine word e konulur ve diziye atılır. bu şekilde kullanıcı sorguyu yazarken en sona virgül koymasına gerek kalmaz. bkz 67
+                        parampos = shString.find(",");// bu kisimda parampos -1 mi diye if konulup eger -1 ise kalan kisim yine word e konulur ve diziye atılır. bu sekilde kullanici sorguyu yazarken en sona virgul koymasina gerek kalmaz. bkz 67
                     }//
                     //-----------------------------------------------------------//
-
-                    /*for(int i = 3; i < kelimeler.size(); i++){ 
-                        sayac++;
-                        params.push_back(kelimeler[i]);
-                    }*/
 
                     command = ctScript + " " + databaseName + " " + tableName + " ";
 
@@ -93,12 +93,13 @@ int main(){
                     system(command.c_str());
                     shParams.clear();
                     kelimeler.clear();
+                    sorgu="";
             }
             break;
         
             default:
                 kelimeler.clear();
-                
+                sorgu="";
             break;
         }
 
