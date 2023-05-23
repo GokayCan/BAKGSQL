@@ -16,6 +16,8 @@ int main(){
     vector<string> kelimeler;
     query qType = none;
     string cdScript = "./CDatabase.sh";
+    string cdlScript="./CLDatabase.sh";
+    string ctlScript="./CLTable.sh";
     string ctScript = "./CTable.sh";
 
     cout<<"=>";
@@ -94,7 +96,32 @@ int main(){
                     shParams.clear();
                     kelimeler.clear();
                     sorgu="";
-            }
+                }
+            break;
+            case _select:
+                if(kelimeler[1]=="database"){
+                    string command = "ls -d */";//sadece klasörler için
+                    int result = system(command.c_str());
+                    if(result==-1){
+                        cout<<"Listeleme Yaparken Bir Sorun Oldu!!"<<endl;
+                    }
+                    cout<<"Database'ler Listelendi!!!"<<endl;
+                    kelimeler.clear();
+                }
+                else if(kelimeler[1]=="table"){
+                    string databaseName;
+                    cout<<"Database Adini Girin:";
+                    cin>>databaseName;
+                    string command = "ls -d "+databaseName+"/*.txt";//türü .txt olanlar için
+                    int result = system(command.c_str());
+                    if(result==-1){
+                        cout<<"Listeleme Yaparken Bir Sorun Oldu!!"<<endl;
+                    }
+                    cout<<"Table'lar Listelendi!!"<<endl;
+                }
+                //shParams.clear();
+                kelimeler.clear();
+                //sorgu="";
             break;
         
             default:
