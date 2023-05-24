@@ -26,9 +26,12 @@ int main(){
     //List SH
     string listTablesSH = "./ListTables.sh";
     string listDatabasesSH = "./ListDatabases.sh";
-    //DeleteS H
+    //Delete SH
     string deleteDatabaseSH = "./DeleteDatabase.sh";
     string deleteTableSH = "./DeleteTable.sh";
+    //Insert SH
+    string insertTable = "./InsertTable.sh";
+
 
     cout<<"=>";
     getline(cin,sorgu);
@@ -47,6 +50,9 @@ int main(){
         }
         else if (kelimeler[0] == "delete"){
             qType = _delete;
+        }
+        else if(kelimeler[0]== "insert"){
+            qType = _insert;
         }
 
         switch (qType)
@@ -153,12 +159,58 @@ int main(){
                 sorgu="";
             break;
 
+            case _insert:
+                //insert into alperen/kisi adi,soyadi,tel no, values ,alperen,sari,03 333,
+                if(true){
+                    string tableName = kelimeler[2],command; 
+
+                    int pos = tableName.find("/");
+                    string databaseName = tableName.substr(0,pos);
+                    tableName = tableName.substr(pos+1);
+
+                    string shString = "";
+                    vector<string> shParams;
+                    vector<string> shValues;
+
+                    for(int i = 3;i<kelimeler.size();i++){
+                        shString += kelimeler[i];
+                        shString += " ";
+                    }
+                    cout<<shString<<endl;
+                
+                    int parampos = shString.find(",");
+                    int cutter = shString.find("values");
+                    //cout<<to_string(cutter);
+                    while(parampos != -1){
+                        string word = shString.substr(0,parampos);
+                        word = "," + word + ",";
+                        shString = shString.substr(parampos+1);
+                        cutter = shString.find("values");
+                        parampos = shString.find(",");
+                        //cout<<to_string(parampos)<<endl;
+                        if(parampos<cutter) shParams.push_back(word);
+                        else shValues.push_back(word);
+                    }
+                
+                    for(int i =0;i<shParams.size();i++)
+                        cout<<shParams[i]<< " ";
+                    cout<<"param bitti"<<endl;
+
+                    for(int i =0;i<shValues.size();i++)
+                        cout<<shValues[i]<< " ";
+                    cout<<endl;
+                
+                
+                
+                }
+
+            break;
+
             default:
                 kelimeler.clear();
                 sorgu="";
             break;
         }
-
         cout<<"=>";
         getline(cin,sorgu);
     }
