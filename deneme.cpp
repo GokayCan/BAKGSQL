@@ -6,19 +6,29 @@
 using namespace std;
 
 enum query{
-    _create = 1,
-    _select = 2,
-    none = 3,    
+    _create = 1, // database veya tablo olustur           //create database dname //create table dname/tname p1,p2,p3,
+    _select = 2, // tablodan veri oku
+    _insert = 3, // tabloya veri ekle
+    _update = 4, // tablodaki veriyi guncelle
+    _delete = 5, // database veya tabloyu sil            //delete database dname //delete table dname/tname
+    _list = 6, // databaseleri veya tablolari listele   //list databases   //list tables dname
+    none = 7, //bos
 };
 
 int main(){
     string sorgu,kelime;
     vector<string> kelimeler;
     query qType = none;
-    string cdScript = "./CDatabase.sh";
-    string cdlScript="./CLDatabase.sh";
-    string ctlScript="./CLTable.sh";
-    string ctScript = "./CTable.sh";
+
+    //Create SH
+    string createDatabaseSH = "./CreateDatabase.sh";
+    string createTableSH = "./CreateTable.sh";
+    //List SH
+    string listTablesSH = "./ListTables.sh";
+    string listDatabasesSH = "./ListDatabases.sh";
+    //DeleteS H
+    string deleteDatabaseSH = "./DeleteDatabase.sh";
+    string deleteTableSH = "./DeleteTable.sh";
 
     cout<<"=>";
     getline(cin,sorgu);
@@ -32,9 +42,11 @@ int main(){
             qType = _create;
         }
             
-        else if (kelimeler[0] == "select") 
-        {
-            qType = _select;
+        else if (kelimeler[0] == "list"){
+            qType = _list;
+        }
+        else if (kelimeler[0] == "delete"){
+            qType = _delete;
         }
 
         switch (qType)
@@ -43,7 +55,7 @@ int main(){
             case _create:
                 //database olusturmak icin
                 if(kelimeler[1] == "database"){
-                    string command = cdScript + " " + kelimeler[2];
+                    string command = createDatabaseSH + " " + kelimeler[2];
                     int result = system(command.c_str());
 
                     if(result == -1) {
@@ -67,13 +79,13 @@ int main(){
 
                     // parametrelerin basina ve sonuna , koyulan kisim. sorgu su sekilde yazilmali -> create table alperen/table1 adi,soyadi,yasi,hava durumu, 
                     string shString = "";
-                    cout<<kelimeler.size()<<endl;
+                    //cout<<kelimeler.size()<<endl;
                     for(int i = 3; i< kelimeler.size();i++){
-                        cout<<kelimeler[i]<<endl;
+                        //cout<<kelimeler[i]<<endl;
                         shString += kelimeler[i];
                         shString += " ";
                     }
-                    cout<<shString<<endl;
+                    //cout<<shString<<endl;
                     vector<string> shParams;
                     int parampos =0;
                     while(parampos != -1){
@@ -81,13 +93,13 @@ int main(){
                         string word = shString.substr(0,parampos);
                         word = "," + word + ",";
                         shParams.push_back(word);
-                        cout<<"calisti"<<endl;
+                        //cout<<"calisti"<<endl;
                         shString = shString.substr(parampos+1);
                         parampos = shString.find(",");// bu kisimda parampos -1 mi diye if konulup eger -1 ise kalan kisim yine word e konulur ve diziye atılır. bu sekilde kullanici sorguyu yazarken en sona virgul koymasina gerek kalmaz. bkz 67
                     }//
                     //-----------------------------------------------------------//
 
-                    command = ctScript + " " + databaseName + " " + tableName + " ";
+                    command = createTableSH + " " + databaseName + " " + tableName + " ";
 
                     for(int i = 0;i<shParams.size();i++){
                         command += " " + shParams[i];
@@ -98,32 +110,49 @@ int main(){
                     sorgu="";
                 }
             break;
-            case _select:
-                if(kelimeler[1]=="database"){
-                    string command = "ls -d */";//sadece klasörler için
+            case _list:
+                if(kelimeler[1]=="databases"){
+                    string command = listDatabasesSH;
                     int result = system(command.c_str());
                     if(result==-1){
                         cout<<"Listeleme Yaparken Bir Sorun Oldu!!"<<endl;
                     }
-                    cout<<"Database'ler Listelendi!!!"<<endl;
                     kelimeler.clear();
                 }
-                else if(kelimeler[1]=="table"){
+                else if(kelimeler[1]=="tables"){
                     string databaseName;
-                    cout<<"Database Adini Girin:";
-                    cin>>databaseName;
-                    string command = "ls -d "+databaseName+"/*.txt";//türü .txt olanlar için
+                    databaseName = kelimeler[kelimeler.size()-1];
+                    string command = listTablesSH + " " + databaseName;
                     int result = system(command.c_str());
                     if(result==-1){
                         cout<<"Listeleme Yaparken Bir Sorun Oldu!!"<<endl;
                     }
-                    cout<<"Table'lar Listelendi!!"<<endl;
                 }
-                //shParams.clear();
                 kelimeler.clear();
-                //sorgu="";
+                sorgu="";
             break;
-        
+
+            case _delete:
+                if(kelimeler[1] == "database"){
+                    string databaseName;
+                    databaseName = kelimeler[kelimeler.size()-1];
+                    string command = deleteDatabaseSH + " " + databaseName;
+                    int result = system(command.c_str());
+                    if(result==-1){
+                        cout<<"Database Silinemedi"<<endl;
+                    }
+                }
+                else if (kelimeler[1] == "table"){
+                    string command = deleteTableSH + " " + kelimeler[2];
+                    int result = system(command.c_str());
+                    if(result==-1){
+                        cout<<"Table Silinemedi"<<endl;
+                    }
+                }
+                kelimeler.clear();
+                sorgu="";
+            break;
+
             default:
                 kelimeler.clear();
                 sorgu="";

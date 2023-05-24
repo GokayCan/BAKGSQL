@@ -5,6 +5,12 @@ paramlist=("$@")
 databasename=${paramlist[0]}
 tablename=${paramlist[1]}
 
+if [ ! -d "$databasename" ]; then
+  echo "Database bulunamadi..."
+  exit 1
+fi
+
+
 # Gelen parametreden sayi kadar değişken oluşturma
 for par in "$sayi";
 do
