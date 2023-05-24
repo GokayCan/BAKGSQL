@@ -10,9 +10,10 @@ enum query{
     _select = 2, // tablodan veri oku
     _insert = 3, // tabloya veri ekle
     _update = 4, // tablodaki veriyi guncelle
-    _delete = 5, // database veya tabloyu sil            //delete database dname //delete table dname/tname
+    _delete = 5, // tablodan veri silmek
     _list = 6, // databaseleri veya tablolari listele   //list databases   //list tables dname
-    none = 7, //bos
+    _drop = 7, // database veya tabloyu sil            //drop database dname //drop table dname/tname
+    none = 8, //bos
 };
 
 int main(){
@@ -27,8 +28,8 @@ int main(){
     string listTablesSH = "./ListTables.sh";
     string listDatabasesSH = "./ListDatabases.sh";
     //Delete SH
-    string deleteDatabaseSH = "./DeleteDatabase.sh";
-    string deleteTableSH = "./DeleteTable.sh";
+    string dropDatabaseSH = "./DropDatabase.sh";
+    string dropTableSH = "./DropTable.sh";
     //Insert SH
     string insertTable = "./InsertTable.sh";
 
@@ -43,13 +44,12 @@ int main(){
         }
         if(kelimeler[0] == "create"){
             qType = _create;
-        }
-            
+        }    
         else if (kelimeler[0] == "list"){
             qType = _list;
         }
-        else if (kelimeler[0] == "delete"){
-            qType = _delete;
+        else if (kelimeler[0] == "drop"){
+            qType = _drop;
         }
         else if(kelimeler[0]== "insert"){
             qType = _insert;
@@ -138,18 +138,18 @@ int main(){
                 sorgu="";
             break;
 
-            case _delete:
+            case _drop:
                 if(kelimeler[1] == "database"){
                     string databaseName;
                     databaseName = kelimeler[kelimeler.size()-1];
-                    string command = deleteDatabaseSH + " " + databaseName;
+                    string command = dropDatabaseSH + " " + databaseName;
                     int result = system(command.c_str());
                     if(result==-1){
                         cout<<"Database Silinemedi"<<endl;
                     }
                 }
                 else if (kelimeler[1] == "table"){
-                    string command = deleteTableSH + " " + kelimeler[2];
+                    string command = dropTableSH + " " + kelimeler[2];
                     int result = system(command.c_str());
                     if(result==-1){
                         cout<<"Table Silinemedi"<<endl;
