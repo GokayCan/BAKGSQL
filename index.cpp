@@ -59,6 +59,9 @@ int main(){
         else if(kelimeler[0]== "select"){
             qType = _select;
         }
+        else if(kelimeler[0]=="delete"){
+            qType=_delete;
+        }
 
         switch (qType)
         {
@@ -262,6 +265,82 @@ int main(){
                 sorgu = "";
             }
             break;
+            case _delete:{
+                
+                string tableName = kelimeler[2]; 
+                int pos = tableName.find("/");
+                string databaseName = tableName.substr(0,pos);
+                tableName = tableName.substr(pos+1);
+                
+                ifstream file(kelimeler[1] + ".bakg");
+                string id,deletedId;
+                bool flag=false;
+                vector<string> records;
+                cout<<"Silmek İstediğiniz Id Numarasini Girin:";
+                cin>>id;
+
+                if (file.is_open()) {
+                    string line;
+
+                    // İlk satırı oku ve sütun adlarını göster
+                    getline(file, line);
+                    istringstream iss(line);
+                    string column;
+                    records.push_back(line);
+
+                    while (getline(iss, column, ',')) {
+                        if (!column.empty()) {
+                            cout << left << setw(10) << column;
+                        }
+                    }
+
+                    cout << endl;
+
+                    // Verileri oku ve ekrana bas
+                    while (getline(file, line)) {
+                        istringstream iss(line);
+                        string data;
+
+                        while (getline(iss, data, ',')) {
+                            if (!data.empty()) {
+                                if(data==id){
+                                    flag=true;
+                                    //cout << left << setw(10) << data;
+                                    break;
+                                }
+                                
+                                cout << left << setw(10) << data;
+                                //cout << left << setw(10) << data;
+                            }
+                        }
+
+                        if (!flag) {
+                            records.push_back(line);
+                            //cout<<endl;
+                        }
+                        flag=false;
+
+                        cout << endl;
+                    }
+                    file.close();
+
+                    ofstream outFile(databaseName+"/temp.bakg");
+                    if(outFile.is_open()){
+                        for(const string& record:records){
+                            outFile<<record<<endl;
+                        }
+                        outFile.close();
+                        remove(databaseName+"/"+tableName+".bakg");
+                        rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
+                        cout<<"Kayit Silindi"<<endl;
+                    }
+                }
+                else {
+                    cout << "Dosya açılamadı." << endl;
+                }
+                kelimeler.clear();
+                sorgu = "";
+            }
 
             default:
                 kelimeler.clear();
