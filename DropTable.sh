@@ -6,7 +6,7 @@
 #filepath="$directory/$filename"
 
 filepath="$1"
-fileEx=".txt"
+fileEx=".bakg"
 
 if [ ! -f "$filepath$fileEx" ]; then
   echo "Uyarı: Tablo bulunamadı: $filepath"

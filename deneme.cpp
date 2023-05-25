@@ -180,28 +180,38 @@ int main(){
                 
                     int parampos = shString.find(",");
                     int cutter = shString.find("values");
-                    //cout<<to_string(cutter);
+                    //cout<<"param:"<<to_string(parampos)<<endl;
+                    //cout<<"cutter:"<<to_string(cutter)<<endl;
                     while(parampos != -1){
                         string word = shString.substr(0,parampos);
                         word = "," + word + ",";
                         shString = shString.substr(parampos+1);
+                        if(parampos<cutter) shParams.push_back(word);
+                        else if(parampos>cutter && word !=", values ,")shValues.push_back(word);
                         cutter = shString.find("values");
                         parampos = shString.find(",");
+                        //cout<<"param:"<<to_string(parampos)<<endl;
+                        //cout<<"cutter:"<<to_string(cutter)<<endl;
                         //cout<<to_string(parampos)<<endl;
-                        if(parampos<cutter) shParams.push_back(word);
-                        else shValues.push_back(word);
+
                     }
                 
-                    for(int i =0;i<shParams.size();i++)
+                    /*for(int i =0;i<shParams.size();i++)
                         cout<<shParams[i]<< " ";
                     cout<<"param bitti"<<endl;
 
                     for(int i =0;i<shValues.size();i++)
                         cout<<shValues[i]<< " ";
-                    cout<<endl;
+                    cout<<endl;*/
                 
-                
-                
+                    command = createTableSH + " " + databaseName + " " + tableName + " ";
+
+                    for(int i=0;i<shValues.size();i++){
+                        command += shValues[i] + " ";
+                    }
+                    system(command.c_str());
+                    kelimeler.clear();
+                    sorgu="";
                 }
 
             break;

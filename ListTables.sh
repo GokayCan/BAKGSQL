@@ -9,7 +9,7 @@ if [ ! -d "$directory" ]; then
 fi
 
 # Dizin içerisindeki tüm .txt dosyalarını listeleme
-for file in "$directory"/*.txt; do
+for file in "$directory"/*.bakg; do
   filename=$(basename "$file")
   filename_without_extension="${filename%.*}"
   printf "%s " "$filename_without_extension"
