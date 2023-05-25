@@ -20,4 +20,5 @@ done
 
 # sonda kalan boşluğu silme
 sed -i 's/ $//' "$databasename/$table"
+echo >> "$databasename/$table"
 

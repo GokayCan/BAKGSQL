@@ -2,13 +2,15 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <fstream>
+#include <iomanip>
+#include <algorithm>
 
 using namespace std;
-
 enum query{
     _create = 1, // database veya tablo olustur           //create database dname //create table dname/tname p1,p2,p3,
     _select = 2, // tablodan veri oku
-    _insert = 3, // tabloya veri ekle
+    _insert = 3, // tabloya veri ekle                    //insert into alperen/kisi adi,soyadi,tel no, values ,alperen,sari,03 333,
     _update = 4, // tablodaki veriyi guncelle
     _delete = 5, // tablodan veri silmek
     _list = 6, // databaseleri veya tablolari listele   //list databases   //list tables dname
@@ -53,6 +55,9 @@ int main(){
         }
         else if(kelimeler[0]== "insert"){
             qType = _insert;
+        }
+        else if(kelimeler[0]== "select"){
+            qType = _select;
         }
 
         switch (qType)
@@ -176,7 +181,7 @@ int main(){
                         shString += kelimeler[i];
                         shString += " ";
                     }
-                    cout<<shString<<endl;
+                    //cout<<shString<<endl;
                 
                     int parampos = shString.find(",");
                     int cutter = shString.find("values");
@@ -201,7 +206,7 @@ int main(){
                     cout<<"param bitti"<<endl;
 
                     for(int i =0;i<shValues.size();i++)
-                        cout<<shValues[i]<< " ";
+                        cout<<shValues[i]<< "/";
                     cout<<endl;*/
                 
                     command = createTableSH + " " + databaseName + " " + tableName + " ";
@@ -213,7 +218,49 @@ int main(){
                     kelimeler.clear();
                     sorgu="";
                 }
+            break;
 
+            case _select:{
+                ifstream file(kelimeler[1] + ".bakg");
+
+                if (file.is_open()) {
+                    string line;
+
+                    // İlk satırı oku ve sütun adlarını göster
+                    getline(file, line);
+                    istringstream iss(line);
+                    string column;
+
+                    while (getline(iss, column, ',')) {
+                        if (!column.empty()) {
+                            cout << left << setw(10) << column;
+                        }
+                    }
+
+                    cout << endl;
+
+                    // Verileri oku ve ekrana bas
+                    while (getline(file, line)) {
+                        istringstream iss(line);
+                        string data;
+
+                        while (getline(iss, data, ',')) {
+                            if (!data.empty()) {
+                                cout << left << setw(10) << data;
+                            }
+                        }
+
+                        cout << endl;
+                    }
+
+                    file.close();
+                }
+                else {
+                    cout << "Dosya açılamadı." << endl;
+                }
+                kelimeler.clear();
+                sorgu = "";
+            }
             break;
 
             default:
