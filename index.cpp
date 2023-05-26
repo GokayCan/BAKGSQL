@@ -168,7 +168,7 @@ int main(){
             break;
 
             case _insert:
-                //insert into alperen/kisi adi,soyadi,tel no, values ,alperen,sari,03 333,
+                //insert into alperen/kisi id,adi,soyadi,tel no, values ,5,alperen,sari,03 333,
                 if(true){
                     string tableName = kelimeler[2],command; 
 
@@ -330,8 +330,8 @@ int main(){
                             outFile<<record<<endl;
                         }
                         outFile.close();
-                        remove(databaseName+"/"+tableName+".bakg");
-                        rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
+                        //remove(databaseName+"/"+tableName+".bakg");
+                        //rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
                         cout<<"Kayit Silindi"<<endl;
                     }
                 }

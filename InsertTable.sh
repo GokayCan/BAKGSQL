@@ -51,24 +51,22 @@ for ((i=0; i<${#tList[@]}; i++)); do
     if [[ "${tList[$i]}" == "${vList[$j]}" ]]; then
       sList+="${tList[$i]}"
     else
-      sList+="null"
+      sList+="nu"
     fi
   done
 done
 
 
 for ((i=0;i<${#tList[@]}; i++)); do
-  if [[ "${tList[$i]}" == "${vList[$j]}" ]]; then
+  if [[ "${tList[$i]}" == "${sList[$j]}" ]]; then
     ehco -n "${vList[$sayac]}" >> "$file"
     (($sayac++))
   else
-    echo -n ",," >> "$file"
+    echo -n ", ," >> "$file"
+  fi
 done
 #elleşmeyin buralara yarın şov yapcam burda
 #echo >> "$databasename/$table" # sh çalıştığında bir alt satıra geçmesi için
 
-for ((i=2; i<${#paramlist[@]}; i++)); do
-  echo -n "${paramlist[$i]} " >> "$file"
-done
 
 echo >> "$file"  # Eklenen parametrelerden sonra bir boş satır daha ekleniyor
