@@ -212,7 +212,13 @@ int main(){
                         cout<<shValues[i]<< "/";
                     cout<<endl;*/
                 
-                    command = createTableSH + " " + databaseName + " " + tableName + " ";
+                    command = insertTable + " " + databaseName + " " + tableName + " ";
+
+                    for(int i=0;i<shParams.size();i++){
+                        command += shParams[i] + " ";
+                    }
+
+                    command += "_ ";
 
                     for(int i=0;i<shValues.size();i++){
                         command += shValues[i] + " ";

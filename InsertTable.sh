@@ -30,39 +30,124 @@ databasename="${paramlist[0]}"
 tablename="${paramlist[1]}"
 table="$tablename.bakg"
 
-file="$database/$table"
 
-read -r ilk_satir < "$file"
+file="$databasename/$table"
 
-tList=($ilk_satir)
+ilk_satir=$(head -n 1 "$file" | tr -d '\r')  # İlk satırı okuma ve '\r' karakterlerini silme
 
-for parametre in "${parametreler[@]}"; do
-  if [[ $parametre == */* ]]; then
-    ilk_kisim="${parametre%%/*}"
-    ikinci_kisim="${parametre#*/}"
+IFS=',' read -ra parcalar <<< "$ilk_satir"  # İlk satırı parçalara ayırma
 
-    pList+=("$ilk_kisim")
-    vList+=("$ikinci_kisim")
+for parca in "${parcalar[@]}"; do
+    parca=$(echo "$parca" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')  # Başındaki ve sonundaki boşlukları kaldırma
+    if [[ -n "$parca" ]]; then  # Parça boş değilse tList'e ekleme
+        tList+=(",$parca,")
+    fi
+done
+
+#printf '%s\n' "${tList[@]}"
+
+#plist vlist doldurma başlangıç
+underIndex=""
+
+for ((i = 2; i < ${#paramlist[@]}; i++)); do
+  if [[ "${paramlist[i]}" == *_* ]]; then
+    underIndex="$underIndex $i"
+    break
+  fi
+
+done
+
+sayac=0
+
+for ((i = 2; i<$underIndex;i++)); do
+  pList[$sayac]="${paramlist[$i]}"
+  ((sayac++))
+done
+
+temp_array=("${pList[@]}")
+willdelete=()
+sayac=0
+for ((i=0;i< ${#pList[@]};i++)); do
+  element="${temp_array[i]}"
+  last="${element: -1}"
+  if [ "$last" != "," ]; then
+    willdelete[$sayac]=$i
+    ((sayac++))
+    next=$((i+1))
+    combined="${temp_array[i]} ${temp_array[i+1]}"
+    #temp_array[$i]="$combined"
+    temp_array[$next]="$combined"
   fi
 done
 
-for ((i=0; i<${#tList[@]}; i++)); do
-  for ((j=0; j<${#vList[@]}; j++)); do
-    if [[ "${tList[$i]}" == "${vList[$j]}" ]]; then
-      sList+="${tList[$i]}"
-    else
-      sList+="nu"
-    fi
-  done
+for ((i=0;i< ${#willdelete[@]};i++)); do
+  unset temp_array["${willdelete[i]}"]
 done
 
+pList=("${temp_array[@]}")
 
+
+sayac=0
+for ((i=$underIndex+1; i < ${#paramlist[@]}; i++)); do
+  vList[$sayac]="${paramlist[$i]}"
+  ((sayac++))
+done
+
+temp_array=("${vList[@]}")
+willdelete=()
+sayac=0
+for ((i=0;i< ${#vList[@]};i++)); do
+  element="${temp_array[i]}"
+  last="${element: -1}"
+  if [ "$last" != "," ]; then
+    willdelete[$sayac]=$i
+    ((sayac++))
+    next=$((i+1))
+    combined="${temp_array[i]} ${temp_array[i+1]}"
+    #temp_array[$i]="$combined"
+    temp_array[$next]="$combined"
+  fi
+done
+
+for ((i=0;i< ${#willdelete[@]};i++)); do
+  unset temp_array["${willdelete[i]}"]
+done
+
+vList=("${temp_array[@]}")
+
+#insert into alperen/kisi adi,soyadi,tel no, values ,aaa,bbb,3425 2134,
+#echo '------------------------'
+#printf '%s\n' "${tList[@]}"
+#echo '------------------------'
+#printf '%s\n' "${pList[@]}"
+#echo '------------------------'
+#printf '%s\n' "${vList[@]}"
+# plist vlist doldurma son
+
+flag=0
+for ((i=0; i<${#tList[@]}; i++)); do
+  for ((j=0; j<${#pList[@]}; j++)); do
+    if [[ "${tList[$i]}" = "${pList[$j]}" ]]; then
+      sList[$i]="${pList[$j]}"
+      flag=1
+    fi
+  done
+  if [[ $flag = 0 ]]; then
+    sList[$i]="nu"
+  else  
+    flag=0
+  fi
+done
+
+echo '------------------------'
+printf '%s\n' "${sList[@]}"
+sayac=0
 for ((i=0;i<${#tList[@]}; i++)); do
-  if [[ "${tList[$i]}" == "${sList[$j]}" ]]; then
-    ehco -n "${vList[$sayac]}" >> "$file"
-    (($sayac++))
+  if [[ "${tList[$i]}" = "${sList[$i]}" ]]; then
+    echo -n "${vList[$sayac]} " >> "$file"
+    ((sayac++))
   else
-    echo -n ", ," >> "$file"
+    echo -n ", , " >> "$file"
   fi
 done
 #elleşmeyin buralara yarın şov yapcam burda
