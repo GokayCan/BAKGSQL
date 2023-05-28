@@ -12,7 +12,7 @@ enum query
     _create = 1, // database veya tablo olustur                //create database dname //create table dname/tname p1,p2,p3,
     _select = 2, // tablodan veri oku                         //select dname/dtable
     _insert = 3, // tabloya veri ekle                        //insert into alperen/kisi adi,soyadi,tel no, values ,alperen,sari,03 333,
-    _update = 4, // tablodaki veriyi guncelle               //
+    _update = 4, // tablodaki veriyi guncelle               //update dname/dtable id ad,soyadi,tel no, values gad,gsoyadi,gtel no 
     _delete = 5, // tablodan veri silmek                   //delete dname/dtable id
     _list = 6,   // databaseleri veya tablolari listele   //list databases   //list tables dname
     _drop = 7,   // database veya tabloyu sil            //drop database dname //drop table dname/tname
@@ -73,6 +73,9 @@ int main()
         else if (kelimeler[0] == "delete")
         {
             qType = _delete;
+        }
+        else if(kelimeler[0]=="update"){
+            qType=_update;
         }
         switch (qType)
         {
@@ -325,21 +328,10 @@ int main()
             if (file.is_open()) {
                 string line;
 
-                // İlk satırı oku ve sütun adlarını göster
                 getline(file, line);
                 istringstream iss(line);
                 string column;
                 records.push_back(line);
-
-                /*while (getline(iss, column, ',')) {
-                    if (!column.empty()) {
-                        cout << left << setw(10) << column;
-                    }
-                }*/
-
-                //cout << endl;
-
-                // Verileri oku ve ekrana bas
                 while (getline(file, line)) {
                     istringstream iss(line);
                     string data;
@@ -348,22 +340,15 @@ int main()
                         if (!data.empty()) {
                             if(data==id){
                                 flag=true;
-                                //cout << left << setw(10) << data;
                                 break;
                             }
-
-                            //cout << left << setw(10) << data;
-                            //cout << left << setw(10) << data;
                         }
                     }
 
                     if (!flag) {
                         records.push_back(line);
-                        //cout<<endl;
                     }
                     flag=false;
-
-                    //cout << endl;
                 }
                 file.close();
 
@@ -383,6 +368,90 @@ int main()
             }
             kelimeler.clear();
             sorgu = "";
+        }
+        break;
+        case _update:
+        {
+            // update alperen/kisi id id,adi,soyadi,tel no, values ,5,alperen,sari,03 333,
+            if (true)
+            {
+                string tableName = kelimeler[1], command;
+                int pos = tableName.find("/");
+                string databaseName = tableName.substr(0,pos);
+                tableName = tableName.substr(pos+1);
+
+
+                string oldValue,updateValue,result,token;
+
+                for (int i = 3; i < kelimeler.size(); i++)
+                {
+                    oldValue=kelimeler[i];
+                }
+
+                cout<<"Mevcut Veri:"<<oldValue<<endl;
+
+                stringstream ss(oldValue);
+
+                while (std::getline(ss, token, ',')) {
+                    if (!token.empty()) {
+                        result += " ," + token + ",";
+                    }
+                }
+
+                updateValue=result;
+
+                cout<<"Güncellenmiş veri:"<<updateValue<<endl;                
+
+                ifstream file(kelimeler[1] + ".bakg");
+                string id,deletedId;
+                bool flag=false;
+                vector<string> records;
+                id = kelimeler[2];
+
+                if (file.is_open()) {
+                    string line;
+
+                    getline(file, line);
+                    istringstream iss(line);
+                    string column;
+                    records.push_back(line);
+                    while (getline(file, line)) {
+                        istringstream iss(line);
+                        string data;
+
+                        while (getline(iss, data, ',')) {
+                            if (!data.empty()) {
+                                if(data==id){
+                                    records.push_back(updateValue);
+                                    flag=true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!flag) {
+                            records.push_back(line);
+                        }
+                        flag=false;
+                    }
+                    file.close();
+
+                    ofstream outFile(databaseName+"/" + tableName + ".bakg");
+                    if(outFile.is_open()){
+                        for(const string& record:records){
+                            outFile<<record<<endl;
+                        }
+                        outFile.close();
+                        cout<<"Kayit Güncellendi"<<endl;
+                    }
+                }
+                
+
+                //system(command.c_str());
+                kelimeler.clear();
+                sorgu = "";
+            }
+            break;
         }
 
         default:

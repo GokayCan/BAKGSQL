@@ -2,3 +2,29 @@ select db/kisiler
 list databases
 list tables alperen
 list databases
+update alperen/kisi 3 baha,arslan,5512591408,
+update 1 alperen/kisi baha,arslan,5512591408
+update 1 alperen/kisi baha,arslan,5512591408
+update alperen/kisi 1 id,adi,soyadi,tel no, values ,12,baha,arslan,5512591408
+update alperen/kisi 1 id,adi,soyadi,tel no, values ,12,baha,arslan,5512591408
+update alperen/kisi 3 baha 12,baha,arslan,5512591408
+update alperen/kisi 3 12,baha,arslan,5512591408
+update alperen/kisi 3 baha,arslan,5512591408
+update alperen/kisi 3 12,baha,arslan,5512591408
+update alperen/kisi 3 12,baha,arslan,5512591408
+update alperen/kisi 3 12,baha,arslan,5512591408,
+update alperen/kisi 3 values ,12,baha,arslan,5512591408,
+update alperen/kisi 3 ,12,baha,arslan,05512591408,
+update alperen/kisi 3 ,baha,arslan,05512591408,
+update alperen/kisi 3 ,12,baha,arslan,055125901408,
+update alperen/kisi 3 ,12,baha,arslan,05512591408,
+update alperen/kisi 3 ,12,baha,arslan,1
+/usr/bin/env /bin/sh /tmp/Microsoft-MIEngine-Cmd-ha25ag0y.35n
+update alperen/kisi 3 12,baha,arslan,5512591408
+update alperen/kisi 3 ,12,bahadir,arslan,5512591408,
+update alperen/kisi 3 ,12,bahadir,arslan,1
+update alperen/kisi 3 ,12,bahadir,arslan,1,
+update alperen/kisi 3 ,12,bahadir,arslan,1,
+update alperen/ksi 3 ,12,bahadir,arslan,1,
+update alperen/kisi 3 ,12,baha,arslan,05512591408,
+update alperen/kisi 6 ,17,safa,güvenc,05512591408,
