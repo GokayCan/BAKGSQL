@@ -23,4 +23,3 @@ if [ "$choice" = "Y" ] || [ "$choice" = "y" ]; then
 else
   echo "İşlem iptal edildi, tablo silinmedi."
 fi
-echo

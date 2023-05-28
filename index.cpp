@@ -101,7 +101,7 @@ int main()
             else if (kelimeler[1] == "table")
             {
                 string command, tableName = kelimeler[2];
-                // vector<string> params;
+
                 int sayac = 0;
 
                 int pos = tableName.find("/");
@@ -110,14 +110,14 @@ int main()
 
                 // parametrelerin basina ve sonuna , koyulan kisim. sorgu su sekilde yazilmali -> create table alperen/table1 adi,soyadi,yasi,hava durumu,
                 string shString = "";
-                // cout<<kelimeler.size()<<endl;
+
                 for (int i = 3; i < kelimeler.size(); i++)
                 {
-                    // cout<<kelimeler[i]<<endl;
+
                     shString += kelimeler[i];
                     shString += " ";
                 }
-                // cout<<shString<<endl;
+
                 vector<string> shParams;
                 int parampos = 0;
                 while (parampos != -1)
@@ -126,7 +126,7 @@ int main()
                     string word = shString.substr(0, parampos);
                     word = "," + word + ",";
                     shParams.push_back(word);
-                    // cout<<"calisti"<<endl;
+
                     shString = shString.substr(parampos + 1);
                     parampos = shString.find(","); // bu kisimda parampos -1 mi diye if konulup eger -1 ise kalan kisim yine word e konulur ve diziye atılır. bu sekilde kullanici sorguyu yazarken en sona virgul koymasina gerek kalmaz. bkz 67
                 }                                  //
@@ -138,7 +138,15 @@ int main()
                 {
                     command += " " + shParams[i];
                 }
-                system(command.c_str());
+                int result = system(command.c_str());
+                if (result == -1)
+                {
+                    cout << "tablo oluşturulurken hata meydana geldi" << endl;
+                }
+                else
+                {
+                    cout << "tablo başarıyla oluşturuldu" << endl;
+                }
                 shParams.clear();
                 kelimeler.clear();
                 sorgu = "";
@@ -214,12 +222,11 @@ int main()
                     shString += kelimeler[i];
                     shString += " ";
                 }
-                // cout<<shString<<endl;
+
 
                 int parampos = shString.find(",");
                 int cutter = shString.find("values");
-                // cout<<"param:"<<to_string(parampos)<<endl;
-                // cout<<"cutter:"<<to_string(cutter)<<endl;
+
                 while (parampos != -1)
                 {
                     string word = shString.substr(0, parampos);
@@ -231,18 +238,8 @@ int main()
                         shValues.push_back(word);
                     cutter = shString.find("values");
                     parampos = shString.find(",");
-                    // cout<<"param:"<<to_string(parampos)<<endl;
-                    // cout<<"cutter:"<<to_string(cutter)<<endl;
-                    // cout<<to_string(parampos)<<endl;
+
                 }
-
-                /*for(int i =0;i<shParams.size();i++)
-                    cout<<shParams[i]<< " ";
-                cout<<"param bitti"<<endl;
-
-                for(int i =0;i<shValues.size();i++)
-                    cout<<shValues[i]<< "/";
-                cout<<endl;*/
 
                 command = insertTable + " " + databaseName + " " + tableName + " ";
 
@@ -367,8 +364,6 @@ int main()
                         outFile << record << endl;
                     }
                     outFile.close();
-                    // remove(databaseName+"/"+tableName+".bakg");
-                    // rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
                     cout << "Kayit Silindi" << endl;
                 }
             }
@@ -470,8 +465,6 @@ int main()
                         cout << "Kayit Güncellendi" << endl;
                     }
                 }
-
-                // system(command.c_str());
                 kelimeler.clear();
                 sorgu = "";
             }

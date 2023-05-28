@@ -26,4 +26,3 @@ else
   rm -r "$directory"
   echo "Database başarıyla silindi."
 fi
-echo

@@ -33,3 +33,4 @@ update alperen/kisi 6 ,17,safa,güvenc,05512591408,
 [2023-05-28 22:16:05] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,25,
 [2023-05-28 22:22:27] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,cann,21,
 [2023-05-28 22:23:35] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,21,
+[2023-05-29 01:02:07] --- drop table db/kisiler
