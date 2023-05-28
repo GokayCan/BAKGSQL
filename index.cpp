@@ -5,7 +5,6 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
-#include <limits>
 
 using namespace std;
 enum query
@@ -19,6 +18,8 @@ enum query
     _drop = 7,   // database veya tabloyu sil            //drop database dname //drop table dname/tname
     none = 8,    // bos
 };
+
+void logger(string logText);
 
 int main()
 {
@@ -40,6 +41,7 @@ int main()
 
     cout << "=>";
     getline(cin, sorgu);
+    logger(sorgu);
 
     while (sorgu != "q")
     {
@@ -72,7 +74,6 @@ int main()
         {
             qType = _delete;
         }
-
         switch (qType)
         {
         // create islemi yapmak icin
@@ -91,8 +92,6 @@ int main()
                 {
                     cout << "database başarıyla oluşturuldu" << endl;
                 }
-
-                kelimeler.clear();
             }
             // tablo olusturmak icin
             else if (kelimeler[1] == "table")
@@ -393,6 +392,7 @@ int main()
         }
         cout << "=>";
         getline(cin, sorgu);
+        logger(sorgu);
     }
     cout << endl
          << "Program Sonu";
@@ -403,3 +403,10 @@ int main()
 //insert into db/kisiler id,ad,soyad,yas, values ,3,gokay,can,21,
 //insert into db/kisiler id,ad,soyad,yas, values ,4,gokay,can,21,
 //insert into db/kisiler id,ad,soyad,yas, values ,7,gokay,can,21,
+
+void logger(string logText)
+{
+    string sh = "./Logger.sh";
+    string command = sh + " " + logText;
+    int result = system(command.c_str());
+}
