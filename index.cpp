@@ -12,7 +12,7 @@ enum query
     _create = 1, // database veya tablo olustur                //create database dname //create table dname/tname p1,p2,p3,
     _select = 2, // tablodan veri oku                         //select dname/dtable
     _insert = 3, // tabloya veri ekle                        //insert into alperen/kisi adi,soyadi,tel no, values ,alperen,sari,03 333,
-    _update = 4, // tablodaki veriyi guncelle               //update dname/dtable id ad,soyadi,tel no, values gad,gsoyadi,gtel no 
+    _update = 4, // tablodaki veriyi guncelle               //update dname/dtable id ad,soyadi,tel no, values gad,gsoyadi,gtel no
     _delete = 5, // tablodan veri silmek                   //delete dname/dtable id
     _list = 6,   // databaseleri veya tablolari listele   //list databases   //list tables dname
     _drop = 7,   // database veya tabloyu sil            //drop database dname //drop table dname/tname
@@ -74,8 +74,9 @@ int main()
         {
             qType = _delete;
         }
-        else if(kelimeler[0]=="update"){
-            qType=_update;
+        else if (kelimeler[0] == "update")
+        {
+            qType = _update;
         }
         switch (qType)
         {
@@ -316,54 +317,63 @@ int main()
         {
             string tableName = kelimeler[1];
             int pos = tableName.find("/");
-            string databaseName = tableName.substr(0,pos);
-            tableName = tableName.substr(pos+1);
+            string databaseName = tableName.substr(0, pos);
+            tableName = tableName.substr(pos + 1);
 
             ifstream file(kelimeler[1] + ".bakg");
-            string id,deletedId;
-            bool flag=false;
+            string id, deletedId;
+            bool flag = false;
             vector<string> records;
             id = kelimeler[2];
 
-            if (file.is_open()) {
+            if (file.is_open())
+            {
                 string line;
 
                 getline(file, line);
                 istringstream iss(line);
                 string column;
                 records.push_back(line);
-                while (getline(file, line)) {
+                while (getline(file, line))
+                {
                     istringstream iss(line);
                     string data;
 
-                    while (getline(iss, data, ',')) {
-                        if (!data.empty()) {
-                            if(data==id){
-                                flag=true;
+                    while (getline(iss, data, ','))
+                    {
+                        if (!data.empty())
+                        {
+                            if (data == id)
+                            {
+                                flag = true;
                                 break;
                             }
                         }
                     }
 
-                    if (!flag) {
+                    if (!flag)
+                    {
                         records.push_back(line);
                     }
-                    flag=false;
+                    flag = false;
                 }
                 file.close();
 
-                ofstream outFile(databaseName+"/" + tableName + ".bakg");
-                if(outFile.is_open()){
-                    for(const string& record:records){
-                        outFile<<record<<endl;
+                ofstream outFile(databaseName + "/" + tableName + ".bakg");
+                if (outFile.is_open())
+                {
+                    for (const string &record : records)
+                    {
+                        outFile << record << endl;
                     }
                     outFile.close();
-                    //remove(databaseName+"/"+tableName+".bakg");
-                    //rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
-                    cout<<"Kayit Silindi"<<endl;
+                    // remove(databaseName+"/"+tableName+".bakg");
+                    // rename(databaseName+"/temp.bakg",databaseName+"/"+tableName+".bakg");
+                    cout << "Kayit Silindi" << endl;
                 }
             }
-            else {
+            else
+            {
                 cout << "Dosya açılamadı." << endl;
             }
             kelimeler.clear();
@@ -377,77 +387,91 @@ int main()
             {
                 string tableName = kelimeler[1], command;
                 int pos = tableName.find("/");
-                string databaseName = tableName.substr(0,pos);
-                tableName = tableName.substr(pos+1);
+                string databaseName = tableName.substr(0, pos);
+                tableName = tableName.substr(pos + 1);
 
-
-                string oldValue,updateValue,result,token;
-
+                string oldValue, updateValue, result, token;
                 for (int i = 3; i < kelimeler.size(); i++)
                 {
-                    oldValue=kelimeler[i];
+                    oldValue = kelimeler[i];
                 }
 
-                cout<<"Mevcut Veri:"<<oldValue<<endl;
+                cout << "Mevcut Veri:" << oldValue << endl;
 
                 stringstream ss(oldValue);
 
-                while (std::getline(ss, token, ',')) {
-                    if (!token.empty()) {
-                        result += " ," + token + ",";
+                while (std::getline(ss, token, ','))
+                {
+                    if (!token.empty())
+                    {
+                        if (result.empty())
+                        {
+                            result += "," + token + ",";
+                        }
+                        else
+                        {
+                            result += " ," + token + ",";
+                        }
                     }
                 }
 
-                updateValue=result;
+                updateValue = result;
 
-                cout<<"Güncellenmiş veri:"<<updateValue<<endl;                
+                cout << "Güncellenmiş veri:" << updateValue << endl;
 
                 ifstream file(kelimeler[1] + ".bakg");
-                string id,deletedId;
-                bool flag=false;
+                string id, deletedId;
+                bool flag = false;
                 vector<string> records;
                 id = kelimeler[2];
 
-                if (file.is_open()) {
+                if (file.is_open())
+                {
                     string line;
 
                     getline(file, line);
                     istringstream iss(line);
                     string column;
                     records.push_back(line);
-                    while (getline(file, line)) {
+                    while (getline(file, line))
+                    {
                         istringstream iss(line);
                         string data;
 
-                        while (getline(iss, data, ',')) {
-                            if (!data.empty()) {
-                                if(data==id){
+                        while (getline(iss, data, ','))
+                        {
+                            if (!data.empty())
+                            {
+                                if (data == id)
+                                {
                                     records.push_back(updateValue);
-                                    flag=true;
+                                    flag = true;
                                     break;
                                 }
                             }
                         }
 
-                        if (!flag) {
+                        if (!flag)
+                        {
                             records.push_back(line);
                         }
-                        flag=false;
+                        flag = false;
                     }
                     file.close();
 
-                    ofstream outFile(databaseName+"/" + tableName + ".bakg");
-                    if(outFile.is_open()){
-                        for(const string& record:records){
-                            outFile<<record<<endl;
+                    ofstream outFile(databaseName + "/" + tableName + ".bakg");
+                    if (outFile.is_open())
+                    {
+                        for (const string &record : records)
+                        {
+                            outFile << record << endl;
                         }
                         outFile.close();
-                        cout<<"Kayit Güncellendi"<<endl;
+                        cout << "Kayit Güncellendi" << endl;
                     }
                 }
-                
 
-                //system(command.c_str());
+                // system(command.c_str());
                 kelimeler.clear();
                 sorgu = "";
             }
@@ -468,10 +492,10 @@ int main()
     return 0;
 }
 
-//insert into db/kisiler id,ad,soyad,yas, values ,2,gokay,can,21,
-//insert into db/kisiler id,ad,soyad,yas, values ,3,gokay,can,21,
-//insert into db/kisiler id,ad,soyad,yas, values ,4,gokay,can,21,
-//insert into db/kisiler id,ad,soyad,yas, values ,7,gokay,can,21,
+// insert into db/kisiler id,ad,soyad,yas, values ,2,gokay,can,21,
+// insert into db/kisiler id,ad,soyad,yas, values ,3,gokay,can,21,
+// insert into db/kisiler id,ad,soyad,yas, values ,4,gokay,can,21,
+// insert into db/kisiler id,ad,soyad,yas, values ,7,gokay,can,21,
 
 void logger(string logText)
 {
