@@ -1,36 +1,43 @@
-select db/kisiler
-list databases
-list tables alperen
-list databases
-update alperen/kisi 3 baha,arslan,5512591408,
-update 1 alperen/kisi baha,arslan,5512591408
-update 1 alperen/kisi baha,arslan,5512591408
-update alperen/kisi 1 id,adi,soyadi,tel no, values ,12,baha,arslan,5512591408
-update alperen/kisi 1 id,adi,soyadi,tel no, values ,12,baha,arslan,5512591408
-update alperen/kisi 3 baha 12,baha,arslan,5512591408
-update alperen/kisi 3 12,baha,arslan,5512591408
-update alperen/kisi 3 baha,arslan,5512591408
-update alperen/kisi 3 12,baha,arslan,5512591408
-update alperen/kisi 3 12,baha,arslan,5512591408
-update alperen/kisi 3 12,baha,arslan,5512591408,
-update alperen/kisi 3 values ,12,baha,arslan,5512591408,
-update alperen/kisi 3 ,12,baha,arslan,05512591408,
-update alperen/kisi 3 ,baha,arslan,05512591408,
-update alperen/kisi 3 ,12,baha,arslan,055125901408,
-update alperen/kisi 3 ,12,baha,arslan,05512591408,
-update alperen/kisi 3 ,12,baha,arslan,1
-/usr/bin/env /bin/sh /tmp/Microsoft-MIEngine-Cmd-ha25ag0y.35n
-update alperen/kisi 3 12,baha,arslan,5512591408
-update alperen/kisi 3 ,12,bahadir,arslan,5512591408,
-update alperen/kisi 3 ,12,bahadir,arslan,1
-update alperen/kisi 3 ,12,bahadir,arslan,1,
-update alperen/kisi 3 ,12,bahadir,arslan,1,
-update alperen/ksi 3 ,12,bahadir,arslan,1,
-update alperen/kisi 3 ,12,baha,arslan,05512591408,
-update alperen/kisi 6 ,17,safa,güvenc,05512591408,
 [2023-05-28 22:15:21] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,22,
 [2023-05-28 22:15:55] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,23,
 [2023-05-28 22:16:05] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,25,
 [2023-05-28 22:22:27] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,cann,21,
 [2023-05-28 22:23:35] --- update db/kisiler 6 id,ad,soyad,yas, values ,6,gokay,can,21,
 [2023-05-29 01:02:07] --- drop table db/kisiler
+[2023-05-30 14:35:47] --- list databases
+[2023-05-30 14:42:31] --- create database deneme
+[2023-05-30 14:42:45] --- create table deneme/dnm ad,soyad,yas
+[2023-05-30 14:43:02] --- create table deneme/dnm ad,soyad,yas,
+[2023-05-30 14:43:31] --- create table deneme/dnm id,ad,
+[2023-05-30 14:44:31] --- create table deneme/dnm id,ad,
+[2023-05-30 14:44:52] --- create table deneme/dnm id,ad,
+[2023-05-30 14:45:12] --- create table deneme/dnm2 id,ad,yas,
+[2023-05-30 14:46:09] --- create table deneme/dnm2 id,ad,yas,
+[2023-05-30 14:46:31] --- create table deneme/dnm2 id,ad,
+[2023-05-30 14:46:43] --- create table deneme/dnm3 id,yas
+[2023-05-30 14:56:01] --- list databases
+[2023-05-30 14:56:06] --- list tables alperen
+[2023-05-30 15:27:05] --- create database kaan
+[2023-05-30 15:28:10] --- create table kaan/kisiler id,ad,
+[2023-05-30 15:28:47] --- create table kaan/asdas id,ad,
+[2023-05-30 15:29:07] --- create table kaan/asdas id,ad,
+[2023-05-30 15:30:12] --- list databases
+[2023-05-30 15:30:29] --- list tables kaan
+[2023-05-30 15:30:44] --- list tables db2
+[2023-05-30 15:31:27] --- list tables asdasdasdasd
+[2023-05-30 15:32:12] --- insert into kaan/kisiler id,ad, values ,1,gokay,
+[2023-05-30 15:33:04] --- insert into kaan/kisiler id,ad, values ,2,kaan,
+[2023-05-30 15:34:01] --- select kaan/kisiler
+[2023-05-30 15:34:46] --- insert into kaan/kisiler id, values ,2,
+[2023-05-30 15:36:43] --- update kaan/kisiler 2 2,alperen,
+[2023-05-30 15:38:58] --- update kaan/kisiler 3 id,ad, values ,3,allllperen,
+[2023-05-30 15:40:03] --- update kaan/kisiler 3 id,ad, values ,3,alperen,
+[2023-05-30 15:40:45] --- delete kaan/kisiler 3
+[2023-05-30 15:41:42] --- drop database kaan
+[2023-05-30 15:42:22] --- drop table kaan/asdas
+[2023-05-30 15:42:39] --- drop database kaan
+[2023-05-30 15:45:04] --- list alperen
+[2023-05-30 15:45:11] --- list database alperen
+[2023-05-30 15:45:35] --- list databases
+[2023-05-30 15:45:40] --- list tables alperen
+[2023-05-30 15:46:08] --- q

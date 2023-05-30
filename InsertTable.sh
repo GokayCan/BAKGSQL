@@ -139,8 +139,6 @@ for ((i=0; i<${#tList[@]}; i++)); do
   fi
 done
 
-echo '------------------------'
-printf '%s\n' "${sList[@]}"
 sayac=0
 for ((i=0;i<${#tList[@]}; i++)); do
   if [[ "${tList[$i]}" = "${sList[$i]}" ]]; then
@@ -150,8 +148,4 @@ for ((i=0;i<${#tList[@]}; i++)); do
     echo -n ", , " >> "$file"
   fi
 done
-#elleşmeyin buralara yarın şov yapcam burda
-#echo >> "$databasename/$table" # sh çalıştığında bir alt satıra geçmesi için
-
-
 echo >> "$file"  # Eklenen parametrelerden sonra bir boş satır daha ekleniyor
