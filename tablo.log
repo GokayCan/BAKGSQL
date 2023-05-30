@@ -41,3 +41,13 @@
 [2023-05-30 15:45:35] --- list databases
 [2023-05-30 15:45:40] --- list tables alperen
 [2023-05-30 15:46:08] --- q
+[2023-05-30 16:44:35] --- list databases
+[2023-05-30 16:44:55] --- create database alperen
+[2023-05-30 18:19:28] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,0555 555 5555,
+[2023-05-30 18:20:34] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,0555 555 5555,
+[2023-05-30 18:21:22] --- q
+[2023-05-30 18:21:36] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,0555 555 5555,
+[2023-05-30 18:21:53] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,055687,
+[2023-05-30 18:22:39] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,0555 555 5555,
+[2023-05-30 18:22:53] --- 
+[2023-05-30 18:23:11] --- update alperen/kisi 17 id,adi,soyadi,tel no, values ,17,safa,guvenc,055123123,

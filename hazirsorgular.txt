@@ -1,0 +1,24 @@
+create database data1
+create database data2
+
+create table data1/kisi id,adi,soyadi,telefon numarasi,adresi,
+create table data2/hamburgerler id,tur,fiyat,
+
+list databases
+list tables data1
+
+insert into data1/kisi id,adi,soyadi,telefon numarasi,adresi, values ,1,alperen,sari,0555 555 5555,endonezya,
+insert into data1/kisi id,adi,soyadi,telefon numarasi,adresi, values ,2,kaan,ceylan,0555 555 5555,uganda,
+insert into data1/kisi id,adi,soyadi,telefon numarasi,adresi, values ,3,gokay can,,0555 555 5555,zimbabwe,
+insert into data1/kisi id,adi,soyadi,telefon numarasi,adresi, values ,4,bahadir,arslan,0555 555 5555,faroe adalari,
+
+update data1/kisi 3 id,adi,soyadi,telefon numarasi,adresi, values ,3,gokay can,kurtoglu,0555 555 5555,turkiye,
+update data1/kisi 4 id,adi,soyadi,telefon numarasi,adresi, values ,4,bahadir,arslan,0555 111 1111,uruguay,
+
+delete data1/kisi 1
+delete data1/kisi 3
+
+drop table data1/kisi
+
+drop database data2
+drop database data1
